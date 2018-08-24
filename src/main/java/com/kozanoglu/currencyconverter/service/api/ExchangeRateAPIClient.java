@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.Date;
 
 @Service
-public class CurrencyConverterAPIService {
+public class ExchangeRateAPIClient {
 
     private static final String BASE_API_URL = "https://v3.exchangerate-api.com/bulk/";
 

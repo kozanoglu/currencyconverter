@@ -2,7 +2,7 @@ package com.kozanoglu.currencyconverter.service.sync;
 
 import com.kozanoglu.currencyconverter.repository.ExchangeRateRepository;
 import com.kozanoglu.currencyconverter.repository.entity.ExchangeRate;
-import com.kozanoglu.currencyconverter.service.api.CurrencyConverterAPIService;
+import com.kozanoglu.currencyconverter.service.api.ExchangeRateAPIClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,17 +16,17 @@ public class ExchangeRateAPITask extends TimerTask {
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final ExchangeRateRepository exchangeRateRepository;
-    private final CurrencyConverterAPIService currencyConverterAPIService;
+    private final ExchangeRateAPIClient exchangeRateAPIClient;
 
     ExchangeRateAPITask(final ExchangeRateRepository exchangeRateRepository,
-                        final CurrencyConverterAPIService currencyConverterAPIService) {
+                        final ExchangeRateAPIClient exchangeRateAPIClient) {
 
         this.exchangeRateRepository = exchangeRateRepository;
-        this.currencyConverterAPIService = currencyConverterAPIService;
+        this.exchangeRateAPIClient = exchangeRateAPIClient;
     }
 
     public void run() {
-        ExchangeRate rate = currencyConverterAPIService.fetchRateFromAPI();
+        ExchangeRate rate = exchangeRateAPIClient.fetchRateFromAPI();
         if (rate != null) {
             LOG.info("EUR/USD rate is {} at {}", rate.getRate(), dateFormat.format(new Date(rate.getTimestamp())));
             exchangeRateRepository.save(rate);
