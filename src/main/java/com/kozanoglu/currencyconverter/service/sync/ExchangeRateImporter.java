@@ -34,5 +34,4 @@ public class ExchangeRateImporter {
         ExchangeRateAPITask st = new ExchangeRateAPITask(exchangeRateRepository, exchangeRateAPIClient);
         time.schedule(st, 0, exchangerateApiSyncPeriod * 1000);
     }
-
 }

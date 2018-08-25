@@ -19,8 +19,6 @@ import java.util.Date;
 @Service
 public class ExchangeRateAPIClient {
 
-    private static final String BASE_API_URL = "https://v3.exchangerate-api.com/bulk/";
-
     @Value("${exchangerate.api.url}")
     private String baseApiUrl;
 
@@ -31,9 +29,10 @@ public class ExchangeRateAPIClient {
 
     public ExchangeRate fetchRateFromAPI() {
 
+        ExchangeRate result = null;
         try {
 
-            String fullUrl = BASE_API_URL + apiKey + "/EUR";
+            String fullUrl = baseApiUrl + apiKey + "/EUR";
 
             Date now = new Date();
 
@@ -41,18 +40,15 @@ public class ExchangeRateAPIClient {
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
             request.connect();
 
-            JsonParser jp = new JsonParser();
-            JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            JsonObject jsonobj = root.getAsJsonObject();
-
-            JsonObject rates = jsonobj.get("rates").getAsJsonObject();
+            JsonElement root = new JsonParser().parse(new InputStreamReader((InputStream) request.getContent()));
+            JsonObject rates = root.getAsJsonObject().get("rates").getAsJsonObject();
             double rate = rates.get("USD").getAsDouble();
-            return new ExchangeRate(now.getTime(), rate);
+            result = new ExchangeRate(now.getTime(), rate);
         } catch (Exception e) {
             LOG.error("Failed to fetch the exchange rate from external API", e);
         }
 
-        return null;
+        return result;
     }
 
 }
