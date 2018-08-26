@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController()
+@RequestMapping("/api")
 public class ExchangeRateController {
 
     private ExchangeRateService exchangeRateService;
