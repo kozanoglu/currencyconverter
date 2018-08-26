@@ -2,7 +2,7 @@ package com.kozanoglu.currencyconverter.service.sync;
 
 import com.kozanoglu.currencyconverter.repository.ExchangeRateRepository;
 import com.kozanoglu.currencyconverter.repository.entity.ExchangeRate;
-import com.kozanoglu.currencyconverter.service.api.ExchangeRateAPIClient;
+import com.kozanoglu.currencyconverter.service.sync.api.ExchangeRateAPIClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
